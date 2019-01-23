@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: 'Jesper Strange Klitgaard Christiansen - Freelance frontend developer',
+    title: '',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
