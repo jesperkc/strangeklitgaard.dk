@@ -10,7 +10,7 @@ const seo = {
   url: 'http://www.strangeklitgaard.dk',
   siteName: 'Strange Klitgaard',
   social: {
-    image: '/images/social.png',
+    image: 'http://www.strangeklitgaard.dk/images/social.png',
     twitter: {
       user: '@jesperkc',
       title: 'Freelance frontend udvikler',
