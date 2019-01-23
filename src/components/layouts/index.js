@@ -4,6 +4,13 @@ import { graphql, StaticQuery } from "gatsby";
 import React from 'react';
 import Helmet from 'react-helmet';
 
+/*
+
+https://www.linkedin.com/post-inspector/
+https://cards-dev.twitter.com/validator
+
+*/
+
 const seo = {
   title: 'Jesper Strange Klitgaard Christiansen - Freelance frontend developer',
   description: 'Freelance frontend udvikler med 20+ års erfaring. Mit fokus ligger i arbejdet med HTML, CSS og JavaScript. React, Gatsby, LESS/SCSS.',

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import React from 'react';
 // import Overlay from '../overlay/overlay.component';
+import Div100vh from 'react-div-100vh';
 
 class Section extends React.Component {
 
@@ -16,9 +17,8 @@ class Section extends React.Component {
 
 
 
-const StyledSection = styled('div')`
+const StyledSection = styled(Div100vh)`
   display: flex;
-  min-height: 100vh;
   /* justify-content: center;
   align-items: center; */
   padding: 80px 40px;

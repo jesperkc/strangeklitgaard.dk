@@ -75,7 +75,7 @@ class Hi extends React.Component {
 
     return (
       <div className={hi_wrapper_css}>
-        <HiDom id={'hi1'} css_offset={0} css_offset_color={this.colors[0]} css_offset={this.props.offset} css_default_offset={0} />
+        <HiDom id={'hi1'} css_offset_color={this.colors[0]} css_offset={this.props.offset} css_default_offset={0} />
         <HiDom id={'hi2'} css_absolute={'True'} css_offset_color={this.colors[1]} css_offset={this.props.offset * 1.5} css_default_offset={0} />
         <HiDom id={'hi3'} css_absolute={'True'} css_offset_color={this.colors[2]} css_offset={this.props.offset * 2} css_default_offset={0} />
       </div>
