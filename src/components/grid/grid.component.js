@@ -6,7 +6,6 @@ const Container = styled('div')`
   min-height: 100%;
   width: 90vw;
   left: 5vw;
-  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   padding: 0 40px;
