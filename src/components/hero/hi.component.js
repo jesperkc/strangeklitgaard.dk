@@ -1,6 +1,7 @@
+import { css } from "@emotion/core";
+import styled from "@emotion/styled";
 import anime from 'animejs';
 import React from 'react';
-import styled, { css } from 'react-emotion';
 import { ReactComponent as HISVG } from '../../static/hi.svg';
 
 class Hi extends React.Component {

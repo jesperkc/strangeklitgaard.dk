@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled from "@emotion/styled";
 import OnVisible from 'react-on-visible';
 
 const my_a = styled('a')`

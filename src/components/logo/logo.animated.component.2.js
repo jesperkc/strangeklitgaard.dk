@@ -1,7 +1,9 @@
+import { css } from "@emotion/core";
+import styled from "@emotion/styled";
 import anime from 'animejs';
 import React from 'react';
-import styled, { css } from 'react-emotion';
 import { ReactComponent as LogoSVG } from '../../static/sk-logo-lines.svg';
+
 
 class LogoAnimated extends React.Component {
 

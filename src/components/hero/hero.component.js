@@ -1,5 +1,5 @@
+import styled from "@emotion/styled";
 import React from 'react';
-import styled from 'react-emotion';
 import ScrollPercentage from 'react-scroll-percentage';
 import Style from '../../style/style';
 import Grid from '../grid/grid.component';
@@ -73,17 +73,18 @@ export const Huge = styled('div')`
   line-height: .8;
   margin-bottom: 40px;
   letter-spacing: -5px;
+  /* text-transform: uppercase; */
 
   @media (orientation: portrait){
     font-size: 27vw;
     @media (min-width: 550px){
-      font-size: 150px;
+      font-size: 13vw;
     }
   }
   @media (orientation: landscape){
     font-size: 27vh;
     @media (min-height: 400px){
-      font-size: 150px;
+      font-size: 13vw;
     }
   }
 `;
