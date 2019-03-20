@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import React from 'react';
 import Contact from '../components/contact/contact.component';
+import HiScroll from '../components/contact/hi-scroll.component';
 // import Hero from '../components/hero/hero.component';
 import Layout from '../components/layouts/';
 import Section from '../components/section/section.component';
@@ -35,6 +36,7 @@ const IndexPage = props => (
     {/* <Section backgroundColor={'#BCE784'} logoColor={'#fff'} logo={'stripes'} title={'Case 2'}></Section>
     <Section backgroundColor={'#348AA7'} logoColor={'#BCE784'} logo={'full'} title={'Case 2'} marginBottom={'40vh'}></Section> */}
     <Section backgroundColor={'#f7f3f0'} color={'#000'} logoColor={'#000'} logo={'full'}><Contact say={'Say hej!'} /></Section>
+    {/* <Section backgroundColor={'#000'} color={'#fff'} logoColor={'#000'} logo={'full'}><HiScroll say={'Say hi!'} /></Section> */}
     {colorCombinations.map((color) => <Section key={color} backgroundColor={color[0]} color={color[1]} logoColor={'#000'} logo={'full'}><Contact say={`Say ${color[2]}`} /></Section>)}
     <Section backgroundColor={'#000'} color={'#fff'} logoColor={'#000'} logo={'full'}><Contact say={'Say hi!'} /></Section>
     <BG></BG>
