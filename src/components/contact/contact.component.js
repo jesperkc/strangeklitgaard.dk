@@ -13,7 +13,6 @@ const Contact = ({ say }) => (
             <Huge>{say}</Huge>
             <br />
             <div><Style.a href="mailto:jesper@strangeklitgaard.dk" target="_blank">jesper@strangeklitgaard.dk</Style.a></div>
-            <div>+45 51 64 90 80</div>
             <br />
             <div><Style.a href="http://www.twitter.com/jesperkc" target="_blank">Twitter</Style.a></div>
             <div><Style.a href="http://www.codepen.io/jesperkc" target="_blank">CodePen</Style.a></div>

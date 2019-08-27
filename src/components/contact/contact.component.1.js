@@ -7,7 +7,6 @@ import Grid from '../grid/grid.component';
 const Contact1 = ({ progress }) => (
   <Grid.Container progress={progress}>
     <div><a href="mailto:jesper@strangeklitgaard.dk" target="_blank">jesper@strangeklitgaard.dk</a></div>
-    <div>+45 51 64 90 80</div>
     <div><a href="http://www.linkedin.com/in/jesperkc" target="_blank">linkedin.com/in/jesperkc</a></div>
     <div><a href="http://www.twitter.com/jesperkc" target="_blank">twitter.com/jesperkc</a></div>
   </Grid.Container>
