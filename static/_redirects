@@ -1,5 +1,0 @@
-# These rules will change if you change your site’s custom domains or HTTPS settings
-
-# Redirect domain aliases to primary domain
-https://kc.bingo/* https://www.strangeklitgaard.dk/:splat 301!
-https://www.kc.bingo/* https://www.strangeklitgaard.dk/:splat 301!

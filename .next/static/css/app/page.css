@@ -1,0 +1,128 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[12].oneOf[9].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[12].oneOf[9].use[5]!./src/app/page.module.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.page_main__akH3E {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.page_section__Lvu0g {
+  display: flex;
+  width: 100%;
+  /* justify-content: center;
+  align-items: center; */
+  padding: 80px 40px;
+  position: relative;
+  background-color: var(--backgroundcolor);
+  background-blend-mode: soft-light;
+  background-image: linear-gradient(45deg, #000, #bb8e55);
+  /* background-attachment: fixed; */
+  color: var(--color);
+}
+.page_section__Lvu0g a {
+  color: inherit;
+}
+.page_section__Lvu0g a:after {
+  background-color: inherit;
+}
+
+.page_contactwrapper__VAjbX {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip: rect(0, auto, auto, 0);
+  -webkit-clip-path: inset(0, auto, auto, 0);
+          clip-path: inset(0, auto, auto, 0);
+}
+.page_contactwrapper__VAjbX a {
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+}
+.page_contactwrapper__VAjbX a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.page_contactwrapper__VAjbX a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.page_huge__ij1Ni {
+  font-weight: 900;
+  margin-left: -10px;
+  line-height: 0.8;
+  margin-bottom: 40px;
+  letter-spacing: -5px;
+  /* text-transform: uppercase; */
+}
+@media (orientation: portrait) {
+  .page_huge__ij1Ni {
+    font-size: 27vw;
+  }
+}
+@media (orientation: portrait) and (min-width: 550px) {
+  .page_huge__ij1Ni {
+    font-size: 13vw;
+  }
+}
+@media (orientation: landscape) {
+  .page_huge__ij1Ni {
+    font-size: 27vh;
+  }
+}
+@media (orientation: landscape) and (min-height: 400px) {
+  .page_huge__ij1Ni {
+    font-size: 13vw;
+  }
+}
+
+.page_contactinner__ytjhm {
+  width: 60vw;
+}
+
+.page_container__LLik5 {
+  min-height: 100%;
+  width: 90vw;
+  left: 5vw;
+  margin: 0 auto;
+  display: flex;
+  padding: 0 40px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.page_row__DcGBw {
+  display: flex;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.page_cell__VZ4Kb {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.page_cellspacer__3mFrH {
+  flex: 1 1;
+}
