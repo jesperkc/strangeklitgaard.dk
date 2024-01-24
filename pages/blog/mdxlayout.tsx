@@ -19,7 +19,7 @@ export default function MdxLayout({
   meta,
   children,
 }: {
-  meta: any
+  meta?: any
   children: React.ReactNode
 }) {
   // Create any shared layout or styles here
@@ -32,9 +32,9 @@ export default function MdxLayout({
     <main className={styles.main} style={style}>
       <Section
         backgroundColor={
-          meta.backgroundColor ? meta.backgroundColor : '#f7f3f0'
+          meta && meta.backgroundColor ? meta.backgroundColor : '#f7f3f0'
         }
-        color={meta.color ? meta.color : '#000'}
+        color={meta && meta.color ? meta.color : '#000'}
         logoColor={'#000'}
         logo={'full'}
         className={styles.clipwrapper}
