@@ -14,11 +14,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const style = {
+    '--headerfont': bodyfont.style.fontFamily,
+  } as React.CSSProperties
+
   return (
     <html lang="en">
-      <body style={{ '--headerfont': bodyfont.style.fontFamily }}>
-        {children}
-      </body>
+      <body style={style}>{children}</body>
     </html>
   )
 }
