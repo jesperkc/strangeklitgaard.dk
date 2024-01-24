@@ -11,11 +11,11 @@ export default function Section(props: any) {
   const style = {
     '--backgroundcolor': props.backgroundColor,
     '--color': props.color,
-    height: halfHeight,
+    height: props.height ? props.height : halfHeight,
   } as React.CSSProperties
 
   return (
-    <div className={styles.section} style={style}>
+    <div className={`${styles.section} ${props.className}`} style={style}>
       {props.children}
     </div>
   )
