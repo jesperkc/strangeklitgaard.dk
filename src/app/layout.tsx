@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
-import { Source_Serif_4 } from 'next/font/google'
+import { Source_Serif_4, Ultra } from 'next/font/google'
 import './globals.css'
 
-const bodyfont = Source_Serif_4({ subsets: ['latin'], weight: '400' })
+const headerfont = Ultra({ subsets: ['latin'], weight: '400' })
+const bodyfont = Source_Serif_4({ subsets: ['latin'], weight: '200' })
 
 export const metadata: Metadata = {
   title: 'Jesper Strange Klitgaard',
@@ -15,7 +16,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const style = {
-    '--headerfont': bodyfont.style.fontFamily,
+    '--bodyfont': bodyfont.style.fontFamily,
+    '--headerfont': headerfont.style.fontFamily,
   } as React.CSSProperties
 
   return (

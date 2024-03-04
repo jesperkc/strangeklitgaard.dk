@@ -1,0 +1,7 @@
+{
+  "editor.stickyScroll.scrollWithEditor": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.stickyScroll.defaultModel": "foldingProviderModel",
+  "editor.stickyScroll.maxLineCount": 7,
+  "workbench.tree.enableStickyScroll": true
+}

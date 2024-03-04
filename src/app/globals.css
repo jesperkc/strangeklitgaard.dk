@@ -84,17 +84,28 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   color: rgb(var(--foreground-rgb));
-  font-family: 'Helvetica', sans-serif;
+  color: #ffffff;
+  /* font-family: 'Helvetica', sans-serif; */
   line-height: 1.8;
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
+  background-color: #283437;
+  font-family: var(--bodyfont), sans-serif;
 }
 
 h1,
@@ -104,6 +115,7 @@ h4,
 h5,
 h6 {
   font-family: var(--headerfont), serif;
+  font-weight: 200;
 }
 
 a {
@@ -114,5 +126,189 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+#threeCanvas {
+  canvas {
+    pointer-events: none;
+    position: relative;
+    z-index: 2;
+  }
+  canvas + div {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.huge {
+  /* font-weight: 900; */
+  margin-left: -10px;
+  line-height: 0.8;
+  margin-bottom: 40px;
+  /* letter-spacing: -5px; */
+  /* text-transform: uppercase; */
+
+  @media (orientation: portrait) {
+    font-size: 60vw;
+    @media (min-width: 550px) {
+      font-size: 230px;
+    }
+  }
+  @media (orientation: landscape) {
+    font-size: 230px;
+    @media (min-height: 400px) {
+      font-size: 230px;
+    }
+  }
+
+  svg {
+    height: auto;
+    max-width: 90vw;
+    @media (orientation: portrait) {
+      width: 60vw;
+      @media (min-width: 550px) {
+        width: 230px;
+      }
+    }
+    @media (orientation: landscape) {
+      width: 230px;
+      @media (min-height: 400px) {
+        width: 330px;
+      }
+    }
+  }
+}
+
+.introinner {
+  /* width: 60vw; */
+  padding: 4vw 0;
+  p {
+    font-size: 3vh;
+    @media (orientation: portrait) {
+      font-size: 5vw;
+    }
+  }
+}
+.contactinner {
+  /* width: 60vw; */
+  padding: 4vw 0;
+  p {
+    font-size: 1.2rem;
+    @media (min-width: 900px) {
+      font-size: 1.5em;
+    }
+  }
+}
+
+.introcontainer {
+  .cell {
+    justify-content: flex-end;
+
+    @media (orientation: landscape) AND (min-width: 900px) {
+      justify-content: center;
+    }
+  }
+}
+
+.container {
+  min-height: 100vh;
+  /* left: 5vw; */
+  margin: 0 auto;
+  display: flex;
+  padding: 0 7vw;
+
+  /* position: fixed; */
+  z-index: 1;
+  top: 0;
+  /* position: fixed !important; */
+  /* transform: translate3d(0, 0, 0); */
+}
+
+.row {
+  display: flex;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.cellspacer {
+  flex: 1;
+}
+
+.introinner {
+  p {
+    opacity: 0;
+    animation: fadein 0.3s 1.5s ease-in forwards;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+svg {
+  .sprite {
+    fill: white;
+  }
+  .h1 .sprite {
+    transform: translateX(-100%);
+    animation: animvertical 0.1s ease-in forwards;
+  }
+  .h2 .sprite {
+    transform: translateY(-100%);
+    animation: animvertical 0.1s 0.2s ease-in forwards;
+  }
+  .hh .sprite {
+    transform: translateX(-100%);
+    animation: animhorizontal 0.2s 0.6s ease-out forwards;
+  }
+  .i .sprite {
+    transform: translateY(-100%);
+    animation: animvertical 0.2s 1s ease-in forwards;
+  }
+  .idot .sprite {
+    /* transform: rotate(90deg);
+    transform-origin: 240px 0px;
+    animation: animrotate 0.5s 0.7s ease-out forwards; */
+    transform: translateY(-100%);
+    animation: animvertical 0.2s 1.3s ease-out forwards;
+  }
+}
+
+@keyframes animvertical {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes animhorizontal {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes animrotate {
+  to {
+    transform: rotate(0deg);
   }
 }
