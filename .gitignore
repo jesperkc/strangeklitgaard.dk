@@ -5,7 +5,6 @@ yarn-error.log
 
 # Build directory
 /code/public
-/public
 .DS_Store
 /.next/
 /out/
