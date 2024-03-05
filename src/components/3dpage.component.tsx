@@ -15,7 +15,7 @@ import { Mesh, NoToneMapping } from 'three'
 import ClientsScene from './clients.component'
 import Hi from './hi.component'
 
-function Backdrop({ backgroundColor }) {
+function Backdrop({}) {
   return (
     <Plane args={[100, 100]} position={[0, 0, -20]} receiveShadow>
       <shadowMaterial
@@ -41,11 +41,7 @@ function Backdrop({ backgroundColor }) {
 }
 
 function isTouchDevice() {
-  return (
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0 ||
-    navigator.msMaxTouchPoints > 0
-  )
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0
 }
 
 function MousePointer({
@@ -145,7 +141,7 @@ function ContactView() {
 }
 
 function ThreeDeeScene(): JSX.Element {
-  const ref = useRef()
+  const ref = useRef(null)
   const textureRef = useRef()
 
   const shadowConfig = {
@@ -281,7 +277,7 @@ function ThreeDeeScene(): JSX.Element {
             {/* <ClientsScene backgroundColor={backgroundColor} /> */}
           </Scroll>
 
-          <Backdrop backgroundColor={backgroundColor} />
+          <Backdrop />
 
           <ambientLight intensity={0.2} />
 

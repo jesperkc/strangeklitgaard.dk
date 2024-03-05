@@ -2,14 +2,14 @@
 import { Text, useIntersect, useScroll } from '@react-three/drei'
 import { Triplet } from '@react-three/cannon'
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
-import { forwardRef, useRef } from 'react'
-import { Shape, MathUtils } from 'three'
+import { Ref, forwardRef, useRef } from 'react'
+import { Shape, MathUtils, Group, Mesh } from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const clients = []
+const clients: any[] = []
 clients.push({
   name: 'Falck',
   type: 'consultant',
@@ -71,7 +71,11 @@ clients.push({
   height: 3,
 })
 
-function roundedPlaneShape(basewidth, baseheight, basedepth) {
+function roundedPlaneShape(
+  basewidth: number,
+  baseheight: number,
+  basedepth: any
+) {
   let radius = 0.05
   let width = basewidth - radius * 2
   let height = baseheight - radius * 2
@@ -151,9 +155,11 @@ const SquareWrapper = ({
 }) => {
   // const scroll = useScroll()
   const data = useScroll()
-  const group = useRef()
+  const group = useRef<Group>(null!)
   const visible = useRef(false)
-  const square = useIntersect((isVisible) => (visible.current = isVisible))
+  // const square = useIntersect<Mesh>(
+  //   (isVisible) => (visible.current = isVisible)
+  // )
   // const [textureRed, textureBlue] = useTexture([
   //   '/Chroma Red.jpg',
   //   '/Chroma Blue.jpg',
@@ -189,7 +195,7 @@ const SquareWrapper = ({
         {client.name}
       </Text>
       <Square
-        ref={square}
+        // ref={square}
         {...{ square_width, square_height, square_depth }}
         backgroundColor={backgroundColor}
       ></Square>
@@ -197,13 +203,20 @@ const SquareWrapper = ({
   )
 }
 
-const Square = forwardRef(
+interface SquareProps {
+  square_width: number
+  square_height: number
+  square_depth: number
+  backgroundColor: any
+}
+
+const Square = forwardRef<Ref<Mesh>, SquareProps>(
   ({ square_width, square_height, square_depth, backgroundColor }, ref) => {
     let shape = roundedPlaneShape(square_width, square_height, square_depth)
 
     return (
       <mesh
-        ref={ref}
+        // ref={ref}
         receiveShadow
         castShadow
         position={[0, square_height / 2, -square_depth + 0.03]}
@@ -251,7 +264,7 @@ const Square = forwardRef(
   }
 )
 
-function ClientsCanvas({ backgroundColor }) {
+function ClientsCanvas({ backgroundColor }: { backgroundColor: any }) {
   const { width, height } = useThree((state) => state.viewport)
 
   const offset = 0
@@ -265,7 +278,7 @@ function ClientsCanvas({ backgroundColor }) {
   const halfmargin = margin / 2
   // squareSize.height = squareSize.width * 1.5
   // const bottomOfView = height / 2 - height * progress
-  const calcStart = (start) => {
+  const calcStart = (start: number) => {
     const pctPos = start / totalHeight
     console.log('pctPos', start, pctPos)
     const returnvalue = height * 3 - height * pctPos
@@ -315,10 +328,14 @@ function ClientsCanvas({ backgroundColor }) {
   )
 }
 
-const rsqw = (t, delta = 0.1, a = 1, f = 1 / (2 * Math.PI)) =>
+const rsqw = (t: number, delta = 0.1, a = 1, f = 1 / (2 * Math.PI)) =>
   (a / Math.atan(1 / delta)) * Math.atan(Math.sin(2 * Math.PI * t * f) / delta)
 
-function ClientsScene({ backgroundColor }): JSX.Element {
+function ClientsScene({
+  backgroundColor,
+}: {
+  backgroundColor: any
+}): JSX.Element {
   return <ClientsCanvas backgroundColor={backgroundColor} />
 }
 

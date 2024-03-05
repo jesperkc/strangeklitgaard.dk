@@ -23,7 +23,7 @@ export default function Home() {
   // Hey there, I'm Jesper, a passionate frontend developer who thrives on the challenge of crafting websites that are both accessible and incredibly exciting. With a deep love for code and a keen eye for design, I'm on a mission to make the web a more user-friendly and visually captivating place.
   return (
     <main className={styles.main}>
-      <ClientsScene />
+      {/* <ClientsScene /> */}
       {/* <Contact say={'Say hej!'} /> */}
       {/* <div className={styles.container}>
           <div className={styles.row}>

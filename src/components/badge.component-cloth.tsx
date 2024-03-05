@@ -1,25 +1,25 @@
 'use client'
 import {
+  PublicApi,
+  Triplet,
+  useBox,
+  useDistanceConstraint,
+  useParticle,
+  usePointToPointConstraint,
+} from '@react-three/cannon'
+import {
   MeshTransmissionMaterial,
   Sphere,
   useScroll,
   useTexture,
 } from '@react-three/drei'
-import {
-  useBox,
-  Triplet,
-  useDistanceConstraint,
-  usePointToPointConstraint,
-  useParticle,
-} from '@react-three/cannon'
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
-import type { PropsWithChildren, Ref, RefObject } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
+import type { MutableRefObject, PropsWithChildren, RefObject } from 'react'
 import {
   createContext,
   createRef,
   forwardRef,
   memo,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -27,13 +27,14 @@ import {
   useState,
 } from 'react'
 import {
+  BufferAttribute,
+  BufferGeometry,
+  DoubleSide,
+  Group,
   Mesh,
   Object3D,
+  Object3DEventMap,
   Shape,
-  DoubleSide,
-  NoToneMapping,
-  BufferGeometry,
-  BufferAttribute,
 } from 'three'
 
 const resolutionX = 2
@@ -60,73 +61,97 @@ const badgeSize = {
 
 const parent = createContext({
   parentposition: [0, 0, 0] as Triplet,
-  parentRef: createRef<Object3D>(),
-  grandparentRef: createRef<Object3D>(),
-  refLeft: createRef<Object3D>(),
-  refRight: createRef<Object3D>(),
+  parentRef: createRef<Mesh | Group>(),
+  // grandparentRef: createRef<Mesh>(),
+  // refLeft: createRef<Mesh>(),
+  // refRight: createRef<Mesh>(),
 })
 
-const Stitch = memo(({ p1, p2, distance = 0.1 }) => {
-  useDistanceConstraint(p1.current.particle, p2.current.particle, {
-    distance,
-  })
+type ParticleType = {
+  particle: RefObject<Object3D<Object3DEventMap>>
+  api: PublicApi
+}
+
+type StitchProps = {
+  p1: RefObject<ParticleType>
+  p2: RefObject<ParticleType>
+  distance: number
+}
+
+const Stitch = memo(({ p1, p2, distance = 0.1 }: StitchProps) => {
+  if (p1.current && p2.current) {
+    useDistanceConstraint(p1.current.particle, p2.current.particle, {
+      distance,
+    })
+  }
 
   return null
 })
 
-const BadgeStitch = memo(({ particle, badge, zPos = 0.1, xPos }) => {
-  // useDistanceConstraint(badge, particle.current.particle, {
-  //   distance: 0.0,
-  //   wakeUpBodies: true,
-  // })
-  usePointToPointConstraint(badge, particle.current.particle, {
-    collideConnected: false,
-    pivotA: [xPos, badgeSize.height / 2 + 0.2, zPos], //badge
-    pivotB: [0, 0, 0],
-    // maxForce: 1000,
-    // maxMultiplier: 100000,
-  })
-  // useConeTwistConstraint
-  // useHingeConstraint(badge, particle.current.particle, {
-  //   axisA: [1, 1, 1], //badge
-  //   axisB: [1, 1, 1],
-  //   collideConnected: false,
-  //   pivotA: [xPos, badgeSize.height / 2 + 0.4, zPos], //badge
-  //   pivotB: [0, 0, 0],
-  //   // maxForce: 5000,
-  // })
+type BadgeStitchProps = {
+  particle: RefObject<ParticleType>
+  badge: RefObject<Mesh | Group>
+  zPos: number
+  xPos: number
+}
 
-  return null
-})
+const BadgeStitch = memo(
+  ({ particle, badge, zPos = 0.1, xPos }: BadgeStitchProps) => {
+    // useDistanceConstraint(badge, particle.current.particle, {
+    //   distance: 0.0,
+    //   wakeUpBodies: true,
+    // })
+    if (particle.current) {
+      usePointToPointConstraint(badge, particle.current.particle, {
+        collideConnected: false,
+        pivotA: [xPos, badgeSize.height / 2 + 0.2, zPos], //badge
+        pivotB: [0, 0, 0],
+        // maxForce: 1000,
+        // maxMultiplier: 100000,
+      })
+      // useConeTwistConstraint
+      // useHingeConstraint(badge, particle.current.particle, {
+      //   axisA: [1, 1, 1], //badge
+      //   axisB: [1, 1, 1],
+      //   collideConnected: false,
+      //   pivotA: [xPos, badgeSize.height / 2 + 0.4, zPos], //badge
+      //   pivotB: [0, 0, 0],
+      //   // maxForce: 5000,
+      // })
+    }
+    return null
+  }
+)
+
+interface PropsDummy {}
+
+interface ParticleProps {
+  mass: number
+  position: Triplet
+  color: string
+}
 
 const Particle = memo(
-  forwardRef(
-    (
-      {
-        mass,
-        position,
-        color,
-      }: { mass: number; position: Triplet; color: string },
-      ref
-    ) => {
-      let [particle, api] = useParticle(() => ({
-        mass,
-        position,
-        linearDamping: linearDamping,
-        angularDamping: angularDamping,
-      }))
+  forwardRef<ParticleType, ParticleProps>(({ mass, position, color }, ref) => {
+    let forwardedRef = ref as MutableRefObject<ParticleType>
 
-      if (ref && particle.current) {
-        ref.current = { particle, api }
-      }
-      return null
-      return (
-        <Sphere ref={particle} args={[0.05]} position={position}>
-          <meshStandardMaterial color={color} />
-        </Sphere>
-      )
+    let [particle, api] = useParticle(() => ({
+      mass,
+      position,
+      linearDamping: linearDamping,
+      angularDamping: angularDamping,
+    }))
+
+    if (forwardedRef && particle.current) {
+      forwardedRef.current = { particle, api }
     }
-  )
+    return null
+    // return (
+    //   <Sphere ref={particle} args={[0.05]} position={position}>
+    //     <meshStandardMaterial color={color} />
+    //   </Sphere>
+    // )
+  })
 )
 
 const strappositions: Triplet[][] = new Array(resolutionY)
@@ -152,12 +177,12 @@ const getPosition = (width: number, height: number): Triplet => {
 
 const Cloth = memo(
   forwardRef(({ delay }: { delay: number }, ref) => {
-    const strapRef = useRef<Ref<Mesh>>(() => createRef<Ref<Mesh>>())
-    const groupRef = useRef<Ref<Mesh>>(() => createRef<Ref<Mesh>>())
+    const strapRef = useRef<Mesh>(null!)
+    const groupRef = useRef<Group>(null!)
     const [readyForStitches, setReadyForStitches] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
 
-    const { parentposition, parentRef, refLeft, refRight } = useContext(parent)
+    const { parentposition, parentRef } = useContext(parent)
 
     const strapDistance = 1.5
     const { width, height } = useThree((state) => state.viewport)
@@ -167,9 +192,9 @@ const Cloth = memo(
       setPosition(getPosition(width, height))
     }, [width])
 
-    const particles = useRef(
+    const particles = useRef<RefObject<ParticleType>[][]>(
       Array.from({ length: resolutionX }, () =>
-        Array.from({ length: resolutionY }, createRef)
+        Array.from({ length: resolutionY }, () => createRef<ParticleType>())
       )
     )
 
@@ -191,7 +216,7 @@ const Cloth = memo(
       isFirst: boolean,
       x: number,
       position: number[]
-    ) => {
+    ): [x: number, y: number, z: number] => {
       if (isFirst) {
         if (x === 0) {
           return [
@@ -229,18 +254,18 @@ const Cloth = memo(
         //   position,
         //   particles.current[0][0].current.api
         // )
-        particles.current[0][0].current.api.position.set(
+        particles.current[0][0].current?.api.position.set(
           ...getStrapPosition(true, 0, position)
         )
-        particles.current[1][0].current.api.position.set(
+        particles.current[1][0].current?.api.position.set(
           ...getStrapPosition(true, 1, position)
         )
         particles.current[0][
           particles.current[0].length - 1
-        ].current.api.position.set(...getStrapPosition(false, 0, position))
+        ].current?.api.position.set(...getStrapPosition(false, 0, position))
         particles.current[1][
           particles.current[0].length - 1
-        ].current.api.position.set(...getStrapPosition(false, 1, position))
+        ].current?.api.position.set(...getStrapPosition(false, 1, position))
       }
     }, [position])
 
@@ -353,17 +378,15 @@ const Cloth = memo(
           y.map((x, xi) => {
             const isFirst = xi === 0
             const isLast = xi === y.length - 1
-            let xpos = isLast
-              ? position[0] + strapDistance + strapSize.width * yi
-              : position[0] + strapSize.width * yi
-            let ypos =
-              isFirst || isLast ? position[1] + strapLength / 2 : position[1]
+            let xpos = position[0] + strapSize.width * yi
+            let ypos = position[1] + xi * distanceY
             let zpos = isLast ? position[2] - 1.5 : position[2] //xi === 0 || xi === y.length - 1 ? 0 : 1
             // zpos = zpos - strapSize.width * yi
 
             let mass = 5
 
             if (isFirst) {
+              ypos = position[1] + strapLength / 2
               let pos = getStrapPosition(true, yi, position)
               if (yi === 0) {
                 xpos = pos[0]
@@ -378,6 +401,7 @@ const Cloth = memo(
             }
 
             if (isLast) {
+              ypos = position[1] + strapLength / 2
               let pos = getStrapPosition(false, yi, position)
               if (yi === 0) {
                 xpos = pos[0]
@@ -390,7 +414,6 @@ const Cloth = memo(
               // zpos = position[2] + 0.5 - strapSize.width
               mass = 0
             }
-
             return (
               <Particle
                 color={
@@ -442,18 +465,22 @@ const Cloth = memo(
           particles.current.map((x, xi) =>
             x.map((y, yi) => {
               const particleBase = y
-              const sameRowNext =
-                yi < resolutionY - 1 ? particles.current[xi][yi + 1] : null
-              const nextRowSame =
-                xi < resolutionX - 1 ? particles.current[xi + 1][yi] : null
-              const nextRowNext =
+              const sameRowNext: RefObject<ParticleType> =
+                yi < resolutionY - 1
+                  ? particles.current[xi][yi + 1]
+                  : createRef()
+              const nextRowSame: RefObject<ParticleType> =
+                xi < resolutionX - 1
+                  ? particles.current[xi + 1][yi]
+                  : createRef()
+              const nextRowNext: RefObject<ParticleType> =
                 xi < resolutionX - 1 && yi < resolutionX - 1
                   ? particles.current[xi + 1][yi + 1]
-                  : null
-              const prevRowNext =
+                  : createRef()
+              const prevRowNext: RefObject<ParticleType> =
                 xi > 0 && yi < resolutionY - 1
                   ? particles.current[xi - 1][yi + 1]
-                  : null
+                  : createRef()
 
               // if (yi === halfY) {
               //   return null
@@ -524,9 +551,9 @@ function roundedBoxFlat(
 ) {
   let qu = q || 1 // qu: start quadrant regarding u, optional
   const pi = Math.PI
-  let indices: any[] | Iterable<number> = []
-  let positions: Iterable<number> = []
-  let uvs: Iterable<number> = []
+  let indices: any[] = []
+  let positions: any[] = []
+  let uvs: any[] = []
 
   makeFronts(s, 1, 0) // smoothness, front is 1, start index  center front
   makeFronts(s, -1, 4 * (s + 3) + 1) // smoothness, back is -1, start index center back
@@ -686,7 +713,7 @@ function Extrusion({ ...props }) {
   const badgeXright = 0 + badgeSize.width / 2
   const badgeXLeft = 0 - badgeSize.width / 2
   const start = [badgeXright - curve, badgeSize.height / 2]
-  const badgePaths: unknown = []
+  const badgePaths: number[][] = []
 
   badgePaths.push([start[0], start[1]])
   badgePaths.push([badgeXright, start[1], badgeXright, start[1] - curve])
@@ -803,14 +830,16 @@ function Extrusion({ ...props }) {
   const shape = useMemo(() => {
     const shape = new Shape()
 
-    badgePaths.forEach((path: string | any[], i: number) => {
+    badgePaths.forEach((path: number[], i: number) => {
       if (i === 0) {
-        shape.moveTo(...path)
+        shape.moveTo(...(path as [x: number, y: number]))
       } else {
         if (path.length > 2) {
-          return shape.quadraticCurveTo(...path)
+          return shape.quadraticCurveTo(
+            ...(path as [aCPx: number, aCPy: number, aX: number, aY: number])
+          )
         }
-        return shape.lineTo(...path)
+        return shape.lineTo(...(path as [x: number, y: number]))
       }
     })
 
@@ -920,12 +949,14 @@ function roundedPlaneShape(reverse: boolean | undefined) {
 
   points.forEach((path, i) => {
     if (i === 0) {
-      shape.moveTo(...path)
+      shape.moveTo(...(path as [x: number, y: number]))
     } else {
       if (path.length > 2) {
-        return shape.quadraticCurveTo(...path)
+        return shape.quadraticCurveTo(
+          ...(path as [aCPx: number, aCPy: number, aX: number, aY: number])
+        )
       }
-      return shape.lineTo(...path)
+      return shape.lineTo(...(path as [x: number, y: number]))
     }
   })
 
@@ -1012,7 +1043,7 @@ function Badge({ children, delay }: PropsWithChildren<BadgeProps>) {
       linearDamping: linearDamping,
       angularDamping: angularDamping,
     }), //'Dynamic' | 'Static' | 'Kinematic';
-    useRef<Mesh>(null)
+    useRef<Group>(null!)
   )
 
   // useFrame((state, delta) => {
