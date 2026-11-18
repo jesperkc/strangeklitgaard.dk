@@ -245,13 +245,6 @@ function ThreeDeeScene(): JSX.Element {
                       <a href={'mailto:jesper@strangeklitgaard.dk'}>Email</a>
                       <br />
                       <a
-                        href={'http://www.twitter.com/jesperkc'}
-                        target="_blank"
-                      >
-                        Twitter
-                      </a>
-                      <br />
-                      <a
                         href={'https://www.linkedin.com/in/jesperkc/'}
                         target="_blank"
                       >
